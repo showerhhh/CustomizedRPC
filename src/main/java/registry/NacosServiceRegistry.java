@@ -19,13 +19,13 @@ public class NacosServiceRegistry {
     private LoadBalancer loadBalancer;
 
     public NacosServiceRegistry(String registryAddr, String loadBalancerType) {
-        // registryAddr为Nacos注册中心地址，不同于其他服务提供者的地址。
         // loadBalancerType为负载均衡调度器的类型。
+        loadBalancer = LoadBalancer.getByType(loadBalancerType);
+        // registryAddr为Nacos注册中心地址，不同于其他服务提供者的地址。
         try {
             namingService = NamingFactory.createNamingService(registryAddr);
-            loadBalancer = LoadBalancer.getByType(loadBalancerType);
         } catch (NacosException e) {
-            logger.error("连接到Nacos时有错误发生: ", e);
+            logger.error("连接到Nacos时有错误发生：", e);
             throw new RpcException(RpcError.FAILED_TO_CONNECT_TO_SERVICE_REGISTRY);
         }
     }
@@ -41,7 +41,7 @@ public class NacosServiceRegistry {
                 namingService.registerInstance(i.getCanonicalName(), inetSocketAddress.getHostName(), inetSocketAddress.getPort());
             }
         } catch (NacosException e) {
-            logger.error("注册服务时有错误发生: ", e);
+            logger.error("注册服务时有错误发生：", e);
             throw new RpcException(RpcError.REGISTER_SERVICE_FAILED);
         }
     }
@@ -53,7 +53,7 @@ public class NacosServiceRegistry {
             Instance instance = loadBalancer.select(instances);
             return new InetSocketAddress(instance.getIp(), instance.getPort());
         } catch (NacosException e) {
-            logger.error("获取服务时有错误发生: ", e);
+            logger.error("获取服务时有错误发生：", e);
             return null;
         }
     }

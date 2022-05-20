@@ -25,6 +25,7 @@ public class NettyServer implements RpcServer {
 
     public NettyServer(ServiceRegistry serviceRegistry, String serializerType) {
         this.serviceRegistry = serviceRegistry;
+
         int code = SerializerCode.valueOf(serializerType).getCode();
         this.serializer = Serializer.getByCode(code);
     }
@@ -34,26 +35,26 @@ public class NettyServer implements RpcServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
-            ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
-                            ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new Encoder(serializer));
-                            pipeline.addLast(new Decoder());
-                            pipeline.addLast(new NettyServerHandler(requestHandler, serviceRegistry));
-                        }
-                    })
-                    .option(ChannelOption.SO_BACKLOG, 256)
-                    .option(ChannelOption.SO_KEEPALIVE, true)
-                    .childOption(ChannelOption.TCP_NODELAY, true);
-            ChannelFuture future = serverBootstrap.bind(port).sync();
+            ServerBootstrap b = new ServerBootstrap();
+            b.group(bossGroup, workerGroup);
+            b.channel(NioServerSocketChannel.class);
+            b.handler(new LoggingHandler(LogLevel.INFO));
+            b.childHandler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel ch) {
+                    ChannelPipeline pipeline = ch.pipeline();
+                    pipeline.addLast(new Encoder(serializer));
+                    pipeline.addLast(new Decoder());
+                    pipeline.addLast(new NettyServerHandler(requestHandler, serviceRegistry));
+                }
+            });
+            b.option(ChannelOption.SO_BACKLOG, 256);
+            b.option(ChannelOption.SO_KEEPALIVE, true);
+            b.childOption(ChannelOption.TCP_NODELAY, true);
+            ChannelFuture future = b.bind(port).sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
-            logger.error("启动服务器时有错误发生: ", e);
+            logger.error("启动服务器时有错误发生：", e);
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();

@@ -21,7 +21,7 @@ public class Decoder extends ReplayingDecoder {
         // 读取并校验魔数
         int magic = in.readInt();
         if (magic != MAGIC_NUMBER) {
-            logger.error("不识别的协议包: {}", magic);
+            logger.error("不识别的协议包：{}", magic);
             throw new RpcException(RpcError.UNKNOWN_PROTOCOL);
         }
         // 读取数据包类型
@@ -32,14 +32,14 @@ public class Decoder extends ReplayingDecoder {
         } else if (packageCode == PackageType.RESPONSE_PACK.getCode()) {
             packageClass = RpcResponse.class;
         } else {
-            logger.error("不识别的数据包: {}", packageCode);
+            logger.error("不识别的数据包：{}", packageCode);
             throw new RpcException(RpcError.UNKNOWN_PACKAGE_TYPE);
         }
         // 读取序列化器编号，用于获得和编码时相同的序列化器
         int serializerCode = in.readInt();
         Serializer serializer = Serializer.getByCode(serializerCode);
         if (serializer == null) {
-            logger.error("不识别的反序列化器: {}", serializerCode);
+            logger.error("不识别的反序列化器：{}", serializerCode);
             throw new RpcException(RpcError.UNKNOWN_SERIALIZER);
         }
         // 读取长度和数据

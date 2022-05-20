@@ -25,7 +25,7 @@ public class JsonSerializer implements Serializer {
             byte[] b = objectMapper.writeValueAsBytes(obj);
             return b;
         } catch (JsonProcessingException e) {
-            logger.error("序列化时有错误发生: {}", e.getMessage());
+            logger.error("序列化时有错误发生：{}", e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -37,7 +37,7 @@ public class JsonSerializer implements Serializer {
             Object obj = objectMapper.readValue(bytes, clazz);
             return obj;
         } catch (IOException e) {
-            logger.error("反序列化时有错误发生: {}", e.getMessage());
+            logger.error("反序列化时有错误发生：{}", e.getMessage());
             e.printStackTrace();
             return null;
         }

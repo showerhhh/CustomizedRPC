@@ -7,9 +7,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import serializer.Serializer;
 
 public class Encoder extends MessageToByteEncoder {
-
     private static final int MAGIC_NUMBER = 0xCAFEBABE;
-
     private final Serializer serializer;
 
     public Encoder(Serializer serializer) {

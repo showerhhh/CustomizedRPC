@@ -11,12 +11,12 @@ import service.HelloServiceImpl;
 public class TestServer {
     public static void main(String[] args) {
         TestServer test = new TestServer();
-        test.test_netty_server();
+        test.test_netty_server_use_nacos();
     }
 
     void test_netty_server_use_nacos() {
         HelloService helloService = new HelloServiceImpl();
-        NettyServerUseNacos server = new NettyServerUseNacos("127.0.0.1:9000", "KRYO", "223.3.88.100:8848", "ROUNDROBIN");
+        NettyServerUseNacos server = new NettyServerUseNacos("127.0.0.1:9000", "KRYO", "223.3.71.21:8848", "ROUNDROBIN");
         server.publishService(helloService);
         server.start();
     }

@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import protocol.RpcRequest;
 import protocol.RpcResponse;
-import server.RequestHandler;
 import registry.ServiceRegistry;
+import server.RequestHandler;
 
 public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
@@ -26,7 +26,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
         try {
-            logger.info("服务器接收到请求: {}", msg);
+            logger.info("服务器接收到请求：{}", msg);
             String interfaceName = msg.getInterfaceName();
             Object service = serviceRegistry.getService(interfaceName);
             Object result = requestHandler.handle(msg, service);
@@ -39,7 +39,6 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> 
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        logger.error("处理过程调用时有错误发生:");
         cause.printStackTrace();
         ctx.close();
     }

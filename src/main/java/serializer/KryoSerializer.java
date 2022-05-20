@@ -25,14 +25,13 @@ public class KryoSerializer implements Serializer {
 
     @Override
     public byte[] serialize(Object obj) {
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             Output output = new Output(byteArrayOutputStream)) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); Output output = new Output(byteArrayOutputStream)) {
             Kryo kryo = kryoThreadLocal.get();
             kryo.writeObject(output, obj);
             kryoThreadLocal.remove();
             return output.toBytes();
         } catch (Exception e) {
-            logger.error("序列化时有错误发生:", e.getMessage());
+            logger.error("序列化时有错误发生：", e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -40,14 +39,13 @@ public class KryoSerializer implements Serializer {
 
     @Override
     public Object deserialize(byte[] bytes, Class<?> clazz) {
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-             Input input = new Input(byteArrayInputStream)) {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes); Input input = new Input(byteArrayInputStream)) {
             Kryo kryo = kryoThreadLocal.get();
             Object o = kryo.readObject(input, clazz);
             kryoThreadLocal.remove();
             return o;
         } catch (Exception e) {
-            logger.error("反序列化时有错误发生:", e.getMessage());
+            logger.error("反序列化时有错误发生：", e.getMessage());
             e.printStackTrace();
             return null;
         }

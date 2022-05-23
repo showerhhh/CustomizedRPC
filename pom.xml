@@ -68,6 +68,16 @@
             <version>${kryo.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>${hessian.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
             <version>${nacos-client.version}</version>
@@ -87,6 +97,8 @@
         <netty.version>4.1.42.Final</netty.version>
         <jackson.version>2.13.2.2</jackson.version>
         <kryo.version>4.0.2</kryo.version>
+        <fastjson.version>1.2.75</fastjson.version>
+        <hessian.version>4.0.38</hessian.version>
         <nacos-client.version>1.4.3</nacos-client.version>
     </properties>
 

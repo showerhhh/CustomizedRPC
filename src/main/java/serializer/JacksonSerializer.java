@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class JsonSerializer implements Serializer {
-    private static final Logger logger = LoggerFactory.getLogger(JsonSerializer.class);
+public class JacksonSerializer implements Serializer {
+    private static final Logger logger = LoggerFactory.getLogger(JacksonSerializer.class);
     private ObjectMapper objectMapper;
 
-    public JsonSerializer() {
+    public JacksonSerializer() {
         objectMapper = new ObjectMapper();
         objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, JsonTypeInfo.As.PROPERTY);
     }
@@ -22,8 +22,7 @@ public class JsonSerializer implements Serializer {
     @Override
     public byte[] serialize(Object obj) {
         try {
-            byte[] b = objectMapper.writeValueAsBytes(obj);
-            return b;
+            return objectMapper.writeValueAsBytes(obj);
         } catch (JsonProcessingException e) {
             logger.error("序列化时有错误发生：{}", e.getMessage());
             e.printStackTrace();
@@ -34,8 +33,7 @@ public class JsonSerializer implements Serializer {
     @Override
     public Object deserialize(byte[] bytes, Class<?> clazz) {
         try {
-            Object obj = objectMapper.readValue(bytes, clazz);
-            return obj;
+            return objectMapper.readValue(bytes, clazz);
         } catch (IOException e) {
             logger.error("反序列化时有错误发生：{}", e.getMessage());
             e.printStackTrace();
@@ -45,6 +43,6 @@ public class JsonSerializer implements Serializer {
 
     @Override
     public int getCode() {
-        return SerializerCode.valueOf("JSON").getCode();
+        return SerializerCode.valueOf("JACKSON").getCode();
     }
 }

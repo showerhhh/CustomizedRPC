@@ -9,7 +9,7 @@ import service.HelloService;
 public class TestClient {
     public static void main(String[] args) {
         TestClient test = new TestClient();
-        test.test_netty_client_use_nacos();
+        test.test_netty_client();
     }
 
     void test_netty_client_use_nacos() {

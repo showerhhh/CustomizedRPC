@@ -11,7 +11,7 @@ import service.HelloServiceImpl;
 public class TestServer {
     public static void main(String[] args) {
         TestServer test = new TestServer();
-        test.test_netty_server_use_nacos();
+        test.test_netty_server();
     }
 
     void test_netty_server_use_nacos() {

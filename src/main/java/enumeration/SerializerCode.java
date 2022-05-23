@@ -6,10 +6,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum SerializerCode {
-    KRYO(0),
-    JSON(1),
+    JDK(0),
+    KRYO(1),
     HESSIAN(2),
-    PROTOBUF(3);
+    JACKSON(3),
+    FASTJSON(4);
 
     private final int code;
 }

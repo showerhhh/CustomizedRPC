@@ -82,6 +82,11 @@
             <artifactId>nacos-client</artifactId>
             <version>${nacos-client.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -100,6 +105,7 @@
         <fastjson.version>1.2.75</fastjson.version>
         <hessian.version>4.0.38</hessian.version>
         <nacos-client.version>1.4.3</nacos-client.version>
+        <cglib.version>3.3.0</cglib.version>
     </properties>
 
 </project>

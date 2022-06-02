@@ -7,10 +7,10 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class RpcClientProxy implements InvocationHandler {
+public class JDKProxy implements InvocationHandler {
     private RpcClient rpcClient;
 
-    public RpcClientProxy(RpcClient rpcClient) {
+    public JDKProxy(RpcClient rpcClient) {
         this.rpcClient = rpcClient;
     }
 

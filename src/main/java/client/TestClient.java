@@ -14,7 +14,7 @@ public class TestClient {
 
     void test_netty_client_use_nacos() {
         RpcClient client = new NettyClientUseNacos("223.3.71.21:8848", "KRYO", "ROUNDROBIN");
-        RpcClientProxy proxy = new RpcClientProxy(client);
+        JDKProxy proxy = new JDKProxy(client);
         HelloService helloService = proxy.getProxy(HelloService.class);
         HelloObject object = new HelloObject(12, 3);
         String res = helloService.hello(object);
@@ -23,7 +23,7 @@ public class TestClient {
 
     void test_netty_client() {
         RpcClient client = new NettyClient("127.0.0.1", 9000, "KRYO");
-        RpcClientProxy proxy = new RpcClientProxy(client);
+        JDKProxy proxy = new JDKProxy(client);
         HelloService helloService = proxy.getProxy(HelloService.class);
         HelloObject object = new HelloObject(12, 3);
         String res = helloService.hello(object);
@@ -32,7 +32,7 @@ public class TestClient {
 
     void test_socket_client() {
         RpcClient client = new SocketClient("127.0.0.1", 9000);
-        RpcClientProxy proxy = new RpcClientProxy(client);
+        JDKProxy proxy = new JDKProxy(client);
         HelloService helloService = proxy.getProxy(HelloService.class);
         HelloObject object = new HelloObject(12, 3);
         String res = helloService.hello(object);
